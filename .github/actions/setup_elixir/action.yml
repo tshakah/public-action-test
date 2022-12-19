@@ -1,0 +1,19 @@
+name: Elixir pre-setup
+description: Presteps to run for all Elixir jobs
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: "1.14.2" # Define the elixir version [required]
+        otp-version: "25.1.2" # Define the OTP version [required]
+    - name: Restore build cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          deps
+          _build
+        key: mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: mix-
+
